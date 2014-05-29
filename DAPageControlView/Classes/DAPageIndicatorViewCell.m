@@ -43,7 +43,7 @@ NSString *const DAPageIndicatorViewCellIdentifier = @"DAPageIndicatorViewCell";
 
 - (UIImage *)imageNamed:(NSString *)imageName
 {
-    NSString *resourcePath = [@"ResourceBundle.bundle" stringByAppendingPathComponent:[NSString stringWithFormat:@"%@%@", imageName, ([UIScreen mainScreen].scale == 2.) ? @"@2x" : @""]];
+    NSString *resourcePath = [@"DAPageControlViewResourceBundle.bundle" stringByAppendingPathComponent:[NSString stringWithFormat:@"%@%@", imageName, ([UIScreen mainScreen].scale == 2.) ? @"@2x" : @""]];
     
     return [[UIImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:resourcePath ofType:@"png"]];
 }
