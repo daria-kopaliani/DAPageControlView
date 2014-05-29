@@ -50,7 +50,7 @@
     
     
     UIButton *add5MoreButton = [[UIButton alloc] initWithFrame:CGRectMake(0., 100, CGRectGetWidth(self.view.frame), 50)];
-    [add5MoreButton setTitle:@"Load 5 More" forState:UIControlStateNormal];
+    [add5MoreButton setTitle:@"Load 15 More" forState:UIControlStateNormal];
     [add5MoreButton setTitle:@"Loading..." forState:UIControlStateDisabled];
     [add5MoreButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [add5MoreButton addTarget:self action:@selector(addMoreButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
@@ -62,7 +62,7 @@
     sender.enabled = NO;
     self.pageControlView.displaysLoadingMoreEffect = YES;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        self.pagesCount += 5;
+        self.pagesCount += 15;
         self.pageControlView.numberOfPages = self.pagesCount;
         [self.collectionView reloadData];
         sender.enabled = YES;
@@ -81,7 +81,7 @@
 {
     DACollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:DACollectionViewCellIdentifier forIndexPath:indexPath];
     cell.backgroundColor = [self colorForIndexPath:indexPath];
-    cell.label.text = [NSString stringWithFormat:@"%lu", (unsigned long)indexPath.row];
+    cell.label.text = [NSString stringWithFormat:@"%lu of %lu", (unsigned long)indexPath.row + 1, (unsigned long)self.pagesCount];
     
     return cell;
 }
