@@ -1,0 +1,14 @@
+PODS:
+  - DAPageControlView (1.0)
+
+DEPENDENCIES:
+  - DAPageControlView (from `https://github.com/daria-kopaliani/DAPageControlView.git`)
+
+EXTERNAL SOURCES:
+  DAPageControlView:
+    :git: https://github.com/daria-kopaliani/DAPageControlView.git
+
+SPEC CHECKSUMS:
+  DAPageControlView: 2a93e3b5ed0c9ec600ba9ad438a0fcbcbecafa1e
+
+COCOAPODS: 0.33.1

@@ -1,0 +1,4 @@
+platform :ios, "7.0"
+
+pod 'DAPageControlView', :git => 'https://github.com/daria-kopaliani/DAPageControlView.git'
+

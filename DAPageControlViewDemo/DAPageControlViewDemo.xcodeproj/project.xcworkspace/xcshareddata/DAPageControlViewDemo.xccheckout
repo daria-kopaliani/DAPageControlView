@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>6C7F1965-F505-41BC-A433-C574A5790866</string>
+	<key>IDESourceControlProjectName</key>
+	<string>DAPageControlViewDemo</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>ED1EC987-3BA6-4D18-8718-612057F0BA31</key>
+		<string>ssh://github.com/daria-kopaliani/DAPageControlView.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>DAPageControlViewDemo/DAPageControlViewDemo.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>ED1EC987-3BA6-4D18-8718-612057F0BA31</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/daria-kopaliani/DAPageControlView.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>ED1EC987-3BA6-4D18-8718-612057F0BA31</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>ED1EC987-3BA6-4D18-8718-612057F0BA31</string>
+			<key>IDESourceControlWCCName</key>
+			<string>DAPageControlView</string>
+		</dict>
+	</array>
+</dict>
+</plist>
