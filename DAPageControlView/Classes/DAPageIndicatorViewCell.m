@@ -31,14 +31,21 @@ NSString *const DAPageIndicatorViewCellIdentifier = @"DAPageIndicatorViewCell";
     self = [super initWithFrame:frame];
     if (self) {
         self.pageIndicatorButton = [[UIButton alloc] initWithFrame:CGRectMake(0., 0., 7., 7.)];
-        [self.pageIndicatorButton setBackgroundImage:[UIImage imageNamed:@"DAPageIndicator"] forState:UIControlStateNormal];
-        [self.pageIndicatorButton setBackgroundImage:[UIImage imageNamed:@"DAPageIndicatorCurrent"] forState:UIControlStateSelected];
+        [self.pageIndicatorButton setBackgroundImage:[self imageNamed:@"DAPageIndicator"] forState:UIControlStateNormal];
+        [self.pageIndicatorButton setBackgroundImage:[self imageNamed:@"DAPageIndicatorCurrent"] forState:UIControlStateSelected];
         self.pageIndicatorButton.center = CGPointMake(0.5 * CGRectGetWidth(frame), 0.5 * CGRectGetHeight(frame));
         self.pageIndicatorButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
         [self.contentView addSubview:self.pageIndicatorButton];
     }
     
     return self;
+}
+
+- (UIImage *)imageNamed:(NSString *)imageName
+{
+    NSString *resourcePath = [@"ResourceBundle.bundle" stringByAppendingPathComponent:[NSString stringWithFormat:@"%@%@", imageName, ([UIScreen mainScreen].scale == 2.) ? @"@2x" : @""]];
+    
+    return [[UIImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:resourcePath ofType:@"png"]];
 }
 
 - (void)prepareForReuse
