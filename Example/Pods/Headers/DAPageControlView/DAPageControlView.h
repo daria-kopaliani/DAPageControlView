@@ -1,1 +1,1 @@
-../../DAPageControlView/DAPageControlView/Classes/DAPageControlView.h
+../../DAPageControlView/Classes/DAPageControlView.h

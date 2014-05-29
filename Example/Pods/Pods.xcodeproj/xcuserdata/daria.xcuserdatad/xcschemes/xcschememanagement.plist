@@ -4,11 +4,6 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>DAPageControlViewResourceBundle.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>Pods-DAPageControlView.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -22,17 +17,12 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>2A8CD3E2F6114588A8E0CC31</key>
+		<key>64C9140AFE37419D9221E1B7</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>6C95070817C54E03B8BCB714</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>872B864258DF4758A202FE9B</key>
+		<key>A79D7644CCBB4C35A0D6067F</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2A8CD3E2F6114588A8E0CC31"
+               BlueprintIdentifier = "A79D7644CCBB4C35A0D6067F"
                BuildableName = "libPods-DAPageControlView.a"
                BlueprintName = "Pods-DAPageControlView"
                ReferencedContainer = "container:Pods.xcodeproj">

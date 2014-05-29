@@ -9,6 +9,6 @@ EXTERNAL SOURCES:
     :git: https://github.com/daria-kopaliani/DAPageControlView.git
 
 SPEC CHECKSUMS:
-  DAPageControlView: 2a93e3b5ed0c9ec600ba9ad438a0fcbcbecafa1e
+  DAPageControlView: 08e46ce2b686a1780b169db2f996ee96d728bc82
 
 COCOAPODS: 0.33.1
