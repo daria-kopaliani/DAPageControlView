@@ -244,6 +244,16 @@ static CGFloat const FCMaximumIndicatorViewWidth = 14.;
 
 #pragma mark - UICollectionView Delegate
 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self setCurrentPage:indexPath.row];
+    if ([self.delegate respondsToSelector:@selector(pageControlViewDidChangeCurrentPage:)]) {
+        [self.delegate pageControlViewDidChangeCurrentPage:self];
+    }
+}
+
+#pragma mark - UICollectionView Delegate Flow Layout
+
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     return CGSizeMake([self indicatorViewWidth], CGRectGetHeight(self.frame));

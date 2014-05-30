@@ -12,7 +12,7 @@
 #import "DAPageControlView.h"
 
 
-@interface DAMainViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
+@interface DAMainViewController () <DAPageControlViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (strong, nonatomic) UICollectionView *collectionView;
 @property (strong, nonatomic) DAPageControlView *pageControlView;
@@ -45,7 +45,7 @@
     self.pageControlView = [[DAPageControlView alloc] initWithFrame:CGRectMake(20., CGRectGetHeight(self.view.bounds) - 100., CGRectGetWidth(self.view.bounds) - 40., 15.)];
     self.pageControlView.numberOfPages = self.pagesCount;
     self.pageControlView.currentPage = 0;
-    self.pageControlView.backgroundColor = [UIColor clearColor];
+    self.pageControlView.delegate = self;
     [self.view addSubview:self.pageControlView];
     
     
@@ -101,6 +101,13 @@
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     return collectionView.bounds.size;
+}
+
+#pragma mark - DAPageControlView Delegate
+
+- (void)pageControlViewDidChangeCurrentPage:(DAPageControlView *)pageControlView
+{
+    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:pageControlView.currentPage inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
 }
 
 #pragma mark - KVO
