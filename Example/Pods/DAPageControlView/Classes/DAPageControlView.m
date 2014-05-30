@@ -48,7 +48,7 @@ static CGFloat const FCMaximumIndicatorViewWidth = 14.;
         self.indicatorsView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         self.indicatorsView.dataSource = self;
         self.indicatorsView.delegate = self;
-        self.indicatorsView.scrollEnabled = YES;
+        self.indicatorsView.scrollEnabled = NO;
         self.indicatorsView.backgroundColor = [UIColor clearColor];
         [self addSubview:self.indicatorsView];
         
