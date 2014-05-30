@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "DAPageControlView"
-  s.version          = "1.0.1"
+  s.version          = "1.0.2"
   s.summary          = "A scrollable page control for those rare cases when UIPageControl won't fit screen width."
   s.homepage     = "https://github.com/daria-kopaliani/DAPageControlView"
   s.license          = 'MIT'
