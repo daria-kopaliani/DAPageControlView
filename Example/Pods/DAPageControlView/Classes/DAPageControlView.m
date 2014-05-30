@@ -84,9 +84,60 @@ static CGFloat const FCMaximumIndicatorViewWidth = 14.;
     self.indicatorsView.frame = CGRectMake(0.5 * (CGRectGetWidth(self.frame) - width), 0., width, CGRectGetHeight(self.frame));
 }
 
+- (void)adjustIndicatorsScale
+{
+    CGFloat width = MIN(self.numberOfPages, [self maximumIndicatorsCount]) * [self indicatorViewWidth];
+    self.indicatorsView.frame = CGRectMake(0.5 * (CGRectGetWidth(self.frame) - width), 0., width, CGRectGetHeight(self.frame));
+    CGFloat offset = self.indicatorsView.contentOffset.x;
+    for (DAPageIndicatorViewCell *aCell in self.indicatorsView.visibleCells) {
+        if (CGRectGetMinX(aCell.frame) < offset + self.numberOfPagesAllowingPerspective * [self indicatorViewWidth]) {
+            if (offset == 0) {
+                [UIView animateWithDuration:0.3 delay:0. options:0 animations:^{
+                    aCell.pageIndicatorButton.transform = CGAffineTransformIdentity;
+                } completion:nil];
+            } else {
+                CGFloat scale = [self scaleForIndicatorAtIndex:aCell.tag];
+                aCell.pageIndicatorButton.transform = CGAffineTransformMakeScale(scale, scale);
+            }
+        } else if (CGRectGetMaxX(aCell.frame) > offset + CGRectGetWidth(self.indicatorsView.frame) - (self.numberOfPagesAllowingPerspective * [self indicatorViewWidth])) {
+            if (offset + CGRectGetWidth(self.indicatorsView.frame) == self.indicatorsView.contentSize.width) {
+                [UIView animateWithDuration:0.3 delay:0. options:0 animations:^{
+                    aCell.pageIndicatorButton.transform = CGAffineTransformIdentity;
+                } completion:nil];
+            } else {
+                CGFloat scale = [self scaleForIndicatorAtIndex:aCell.tag];
+                aCell.pageIndicatorButton.transform = CGAffineTransformMakeScale(scale, scale);
+            }
+        } else {
+            aCell.pageIndicatorButton.transform = CGAffineTransformIdentity;
+        }
+    }
+}
+
 - (CGFloat)indicatorViewWidth
 {
     return FCMaximumIndicatorViewWidth;
+}
+
+- (CGFloat)scaleForIndicatorAtIndex:(NSUInteger)index
+{
+    CGFloat scale = 1.;
+    CGFloat offset = self.indicatorsView.contentOffset.x;
+    if (index * [self indicatorViewWidth] < offset + self.numberOfPagesAllowingPerspective * [self indicatorViewWidth]) {
+        if (offset > 0) {
+            CGFloat delta = index * [self indicatorViewWidth] - (offset + self.numberOfPagesAllowingPerspective * [self indicatorViewWidth]);
+            scale = 1 - 0.6 * (fabsf(delta)) / (self.numberOfPagesAllowingPerspective * [self indicatorViewWidth]);
+        }
+    } else {
+        if ((index + 1) * [self indicatorViewWidth] > offset + CGRectGetWidth(self.indicatorsView.frame) - (self.numberOfPagesAllowingPerspective * [self indicatorViewWidth])) {
+            if (offset + CGRectGetWidth(self.indicatorsView.frame) < self.indicatorsView.contentSize.width) {
+                CGFloat delta = (offset + CGRectGetWidth(self.indicatorsView.frame) - (self.numberOfPagesAllowingPerspective * [self indicatorViewWidth])) - (index + 1) * [self indicatorViewWidth];
+                scale = 1 - 0.6 * (fabsf(delta)) / (self.numberOfPagesAllowingPerspective * [self indicatorViewWidth]);
+            }
+        }
+    }
+    
+    return scale;
 }
 
 - (NSUInteger)maximumIndicatorsCount
@@ -151,6 +202,7 @@ static CGFloat const FCMaximumIndicatorViewWidth = 14.;
         _numberOfPages = numberOfPages;
         [self adjustIndicatorsViewFrame];
         [self.indicatorsView reloadData];
+        [self.indicatorsView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:self.currentPage inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:YES];
         self.indicatorsView.hidden = (self.numberOfPages <= 1);
     }
 }
@@ -159,33 +211,7 @@ static CGFloat const FCMaximumIndicatorViewWidth = 14.;
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    CGFloat offset = self.indicatorsView.contentOffset.x;
-    
-    for (DAPageIndicatorViewCell *aCell in self.indicatorsView.visibleCells) {
-        if (CGRectGetMinX(aCell.frame) < offset + self.numberOfPagesAllowingPerspective * [self indicatorViewWidth]) {
-            if (offset == 0) {
-                [UIView animateWithDuration:0.3 delay:0. options:0 animations:^{
-                    aCell.pageIndicatorButton.transform = CGAffineTransformIdentity;
-                } completion:nil];
-            } else {
-                CGFloat delta = CGRectGetMinX(aCell.frame) - (offset + self.numberOfPagesAllowingPerspective * [self indicatorViewWidth]);
-                CGFloat scale = 1 - 0.6 * (fabsf(delta)) / (self.numberOfPagesAllowingPerspective * [self indicatorViewWidth]);
-                aCell.pageIndicatorButton.transform = CGAffineTransformMakeScale(scale, scale);
-            }
-        } else {
-            if (CGRectGetMaxX(aCell.frame) > offset + CGRectGetWidth(self.indicatorsView.frame) - (self.numberOfPagesAllowingPerspective * [self indicatorViewWidth])) {
-                if (offset + CGRectGetWidth(self.indicatorsView.frame) == self.indicatorsView.contentSize.width) {
-                    [UIView animateWithDuration:0.3 delay:0. options:0 animations:^{
-                        aCell.pageIndicatorButton.transform = CGAffineTransformIdentity;
-                    } completion:nil];
-                } else {
-                    CGFloat delta = (offset + CGRectGetWidth(self.indicatorsView.frame) - (self.numberOfPagesAllowingPerspective * [self indicatorViewWidth])) - CGRectGetMaxX(aCell.frame);
-                    CGFloat scale = 1 - 0.6 * (fabsf(delta)) / (self.numberOfPagesAllowingPerspective * [self indicatorViewWidth]);
-                    aCell.pageIndicatorButton.transform = CGAffineTransformMakeScale(scale, scale);
-                }
-            }
-        }
-    }
+    [self adjustIndicatorsScale];
 }
 
 #pragma mark - UICollectionView Data Source
@@ -200,7 +226,8 @@ static CGFloat const FCMaximumIndicatorViewWidth = 14.;
     DAPageIndicatorViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:DAPageIndicatorViewCellIdentifier forIndexPath:indexPath];
     cell.tag = indexPath.row;
     cell.pageIndicatorButton.selected = (indexPath.row == self.currentPage);
-    
+    CGFloat scale = [self scaleForIndicatorAtIndex:indexPath.row];
+    cell.pageIndicatorButton.transform = CGAffineTransformMakeScale(scale, scale);
     if (indexPath.row == self.numberOfPages - 1) {
         if (self.displaysLoadingMoreEffect) {
             [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionAutoreverse | UIViewAnimationOptionRepeat | UIViewAnimationOptionCurveEaseInOut animations:^{
