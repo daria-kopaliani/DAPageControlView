@@ -4,6 +4,9 @@
 [![License](https://img.shields.io/cocoapods/l/DAPageControlView.svg?style=flat)](http://cocoadocs.org/docsets/DAPageControlView)
 [![Platform](https://img.shields.io/cocoapods/p/DAPageControlView.svg?style=flat)](http://cocoadocs.org/docsets/DAPageControlView)
 
+![Alt text](DAPageControlView.gif)
+
+
 ## Abstract
 
 I just love `UIPageControl`, don’t you? It’s simple and intuitive, a perfect choice when you have a fullscreen `UIScrollView` with `pagingEnabled` and you want to encourage your users to “swipe to see more”.  
