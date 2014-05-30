@@ -14,7 +14,7 @@ extern NSString *const DAPageIndicatorViewCellIdentifier;
 
 @interface DAPageIndicatorViewCell : UICollectionViewCell
 
-@property (readonly, strong, nonatomic) UIButton *pageIndicatorButton;
+@property (readonly, strong, nonatomic) UIButton *pageIndicatorView;
 
 + (instancetype)defaultCell;
 
