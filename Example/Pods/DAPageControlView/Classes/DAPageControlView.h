@@ -10,10 +10,11 @@
 
 @interface DAPageControlView : UIView
 
-@property (assign, nonatomic) NSUInteger numberOfPages;
 @property (assign, nonatomic) NSUInteger currentPage;
-@property (assign, nonatomic) NSUInteger numberOfPagesAllowingPerspective;
 @property (assign, nonatomic) BOOL displaysLoadingMoreEffect;
+@property (assign, nonatomic) BOOL hidesForSinglePage;
+@property (assign, nonatomic) NSUInteger numberOfPages;
+@property (assign, nonatomic) NSUInteger numberOfPagesAllowingPerspective;
 
 - (void)updateForScrollViewContentOffset:(CGFloat)contentOffset pageSize:(CGFloat)pageSize;
 

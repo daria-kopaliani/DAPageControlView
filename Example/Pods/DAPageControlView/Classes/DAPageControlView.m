@@ -137,12 +137,21 @@ static CGFloat const FCMaximumIndicatorViewWidth = 14.;
     }
 }
 
+- (void)setHidesForSinglePage:(BOOL)hidesForSinglePage
+{
+    if (_hidesForSinglePage != hidesForSinglePage) {
+        _hidesForSinglePage = hidesForSinglePage;
+        self.indicatorsView.hidden = (self.numberOfPages <= 1);
+    }
+}
+
 - (void)setNumberOfPages:(NSUInteger)numberOfPages
 {
     if (_numberOfPages != numberOfPages) {
         _numberOfPages = numberOfPages;
         [self adjustIndicatorsViewFrame];
         [self.indicatorsView reloadData];
+        self.indicatorsView.hidden = (self.numberOfPages <= 1);
     }
 }
 
