@@ -10,11 +10,13 @@
 
 
 NSString *const DAPageIndicatorViewCellIdentifier = @"DAPageIndicatorViewCell";
+CGFloat const DAPageIndicatorViewWidth = 7.;
+CGFloat const DAPageIndicatorViewHeight = DAPageIndicatorViewWidth;
 
 
 @interface DAPageIndicatorViewCell()
 
-@property (strong, nonatomic) UIButton *pageIndicatorButton;
+@property (strong, nonatomic) UIButton *pageIndicatorView;
 
 @end
 
@@ -23,19 +25,20 @@ NSString *const DAPageIndicatorViewCellIdentifier = @"DAPageIndicatorViewCell";
 
 + (instancetype)defaultCell
 {
-    return [[self alloc] initWithFrame:CGRectMake(0., 0., 12, 12)];
+    return [[self alloc] initWithFrame:CGRectMake(0., 0., DAPageIndicatorViewWidth, DAPageIndicatorViewHeight)];
 }
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.pageIndicatorButton = [[UIButton alloc] initWithFrame:CGRectMake(0., 0., 7., 7.)];
-        [self.pageIndicatorButton setBackgroundImage:[UIImage imageNamed:@"DAPageIndicator"] forState:UIControlStateNormal];
-        [self.pageIndicatorButton setBackgroundImage:[UIImage imageNamed:@"DAPageIndicatorCurrent"] forState:UIControlStateSelected];
-        self.pageIndicatorButton.center = CGPointMake(0.5 * CGRectGetWidth(frame), 0.5 * CGRectGetHeight(frame));
-        self.pageIndicatorButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
-        [self.contentView addSubview:self.pageIndicatorButton];
+        self.pageIndicatorView = [[UIButton alloc] initWithFrame:CGRectMake(0., 0., DAPageIndicatorViewWidth, DAPageIndicatorViewHeight)];
+        [self.pageIndicatorView setBackgroundImage:[UIImage imageNamed:@"DAPageIndicator"] forState:UIControlStateNormal];
+        [self.pageIndicatorView setBackgroundImage:[UIImage imageNamed:@"DAPageIndicatorCurrent"] forState:UIControlStateSelected];
+        self.pageIndicatorView.center = CGPointMake(0.5 * CGRectGetWidth(frame), 0.5 * CGRectGetHeight(frame));
+        self.pageIndicatorView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+        self.pageIndicatorView.userInteractionEnabled = NO;
+        [self.contentView addSubview:self.pageIndicatorView];
     }
     
     return self;
@@ -44,7 +47,7 @@ NSString *const DAPageIndicatorViewCellIdentifier = @"DAPageIndicatorViewCell";
 - (void)prepareForReuse
 {
     [super prepareForReuse];
-    self.pageIndicatorButton.transform = CGAffineTransformIdentity;
+    self.pageIndicatorView.transform = CGAffineTransformIdentity;
     self.alpha = 1.;
     [self.layer removeAllAnimations];
 }

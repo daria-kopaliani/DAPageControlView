@@ -93,23 +93,23 @@ static CGFloat const FCMaximumIndicatorViewWidth = 14.;
         if (CGRectGetMinX(aCell.frame) < offset + self.numberOfPagesAllowingPerspective * [self indicatorViewWidth]) {
             if (offset == 0) {
                 [UIView animateWithDuration:0.3 delay:0. options:0 animations:^{
-                    aCell.pageIndicatorButton.transform = CGAffineTransformIdentity;
+                    aCell.pageIndicatorView.transform = CGAffineTransformIdentity;
                 } completion:nil];
             } else {
                 CGFloat scale = [self scaleForIndicatorAtIndex:aCell.tag];
-                aCell.pageIndicatorButton.transform = CGAffineTransformMakeScale(scale, scale);
+                aCell.pageIndicatorView.transform = CGAffineTransformMakeScale(scale, scale);
             }
         } else if (CGRectGetMaxX(aCell.frame) > offset + CGRectGetWidth(self.indicatorsView.frame) - (self.numberOfPagesAllowingPerspective * [self indicatorViewWidth])) {
             if (offset + CGRectGetWidth(self.indicatorsView.frame) == self.indicatorsView.contentSize.width) {
                 [UIView animateWithDuration:0.3 delay:0. options:0 animations:^{
-                    aCell.pageIndicatorButton.transform = CGAffineTransformIdentity;
+                    aCell.pageIndicatorView.transform = CGAffineTransformIdentity;
                 } completion:nil];
             } else {
                 CGFloat scale = [self scaleForIndicatorAtIndex:aCell.tag];
-                aCell.pageIndicatorButton.transform = CGAffineTransformMakeScale(scale, scale);
+                aCell.pageIndicatorView.transform = CGAffineTransformMakeScale(scale, scale);
             }
         } else {
-            aCell.pageIndicatorButton.transform = CGAffineTransformIdentity;
+            aCell.pageIndicatorView.transform = CGAffineTransformIdentity;
         }
     }
 }
@@ -168,7 +168,7 @@ static CGFloat const FCMaximumIndicatorViewWidth = 14.;
         _currentPage = currentPage;
     }
     [self.indicatorsView.visibleCells enumerateObjectsUsingBlock:^(DAPageIndicatorViewCell *cell, NSUInteger idx, BOOL *stop) {
-        cell.pageIndicatorButton.selected = (cell.tag == currentPage);
+        cell.pageIndicatorView.selected = (cell.tag == currentPage);
     }];
 }
 
@@ -225,9 +225,9 @@ static CGFloat const FCMaximumIndicatorViewWidth = 14.;
 {
     DAPageIndicatorViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:DAPageIndicatorViewCellIdentifier forIndexPath:indexPath];
     cell.tag = indexPath.row;
-    cell.pageIndicatorButton.selected = (indexPath.row == self.currentPage);
+    cell.pageIndicatorView.selected = (indexPath.row == self.currentPage);
     CGFloat scale = [self scaleForIndicatorAtIndex:indexPath.row];
-    cell.pageIndicatorButton.transform = CGAffineTransformMakeScale(scale, scale);
+    cell.pageIndicatorView.transform = CGAffineTransformMakeScale(scale, scale);
     if (indexPath.row == self.numberOfPages - 1) {
         if (self.displaysLoadingMoreEffect) {
             [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionAutoreverse | UIViewAnimationOptionRepeat | UIViewAnimationOptionCurveEaseInOut animations:^{
