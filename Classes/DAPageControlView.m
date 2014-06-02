@@ -202,7 +202,13 @@ static CGFloat const FCMaximumIndicatorViewWidth = 14.;
         _numberOfPages = numberOfPages;
         [self adjustIndicatorsViewFrame];
         [self.indicatorsView reloadData];
-        [self.indicatorsView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:self.currentPage inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:YES];
+        
+        if (numberOfPages > self.currentPage) {
+            [self.indicatorsView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:self.currentPage inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:YES];
+        } else {
+            _currentPage = numberOfPages - 1;
+        }
+        
         self.indicatorsView.hidden = (self.numberOfPages <= 1);
     }
 }
