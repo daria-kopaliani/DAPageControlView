@@ -10,5 +10,5 @@
 #define COCOAPODS_POD_AVAILABLE_DAPageControlView
 #define COCOAPODS_VERSION_MAJOR_DAPageControlView 1
 #define COCOAPODS_VERSION_MINOR_DAPageControlView 0
-#define COCOAPODS_VERSION_PATCH_DAPageControlView 0
+#define COCOAPODS_VERSION_PATCH_DAPageControlView 3
 
