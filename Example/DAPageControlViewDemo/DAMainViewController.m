@@ -17,6 +17,7 @@
 @property (strong, nonatomic) UICollectionView *collectionView;
 @property (strong, nonatomic) DAPageControlView *pageControlView;
 @property (assign, nonatomic) NSUInteger pagesCount;
+@property (assign, nonatomic) BOOL loading;
 
 @end
 
@@ -36,25 +37,21 @@
     self.collectionView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
-    [self.collectionView registerClass:[DACollectionViewCell class] forCellWithReuseIdentifier:DACollectionViewCellIdentifier];
+    
+    [self.collectionView registerNib:[UINib nibWithNibName:@"DACollectionViewCell" bundle:nil] forCellWithReuseIdentifier:DACollectionViewCellIdentifier];
+    
     [self.view addSubview:self.collectionView];
     [self.collectionView addObserver:self forKeyPath:@"contentOffset" options:0 context:nil];
     [self.collectionView reloadData];
     
-    self.pagesCount = 10;
-    self.pageControlView = [[DAPageControlView alloc] initWithFrame:CGRectMake(20., CGRectGetHeight(self.view.bounds) - 100., CGRectGetWidth(self.view.bounds) - 40., 15.)];
+    self.pagesCount = 7;
+    self.pageControlView = [[DAPageControlView alloc] initWithFrame:CGRectMake(40., 250., 240., 15.)];
     self.pageControlView.numberOfPages = self.pagesCount;
     self.pageControlView.currentPage = 0;
     self.pageControlView.delegate = self;
-    [self.view addSubview:self.pageControlView];
+    [self.view addSubview:self.pageControlView];    
     
-    
-    UIButton *add5MoreButton = [[UIButton alloc] initWithFrame:CGRectMake(0., 100, CGRectGetWidth(self.view.frame), 50)];
-    [add5MoreButton setTitle:@"Load 15 More" forState:UIControlStateNormal];
-    [add5MoreButton setTitle:@"Loading..." forState:UIControlStateDisabled];
-    [add5MoreButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [add5MoreButton addTarget:self action:@selector(addMoreButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:add5MoreButton];
+    self.loading = NO;
 }
 
 - (void)addMoreButtonPressed:(UIButton *)sender
@@ -80,20 +77,10 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     DACollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:DACollectionViewCellIdentifier forIndexPath:indexPath];
-    cell.backgroundColor = [self colorForIndexPath:indexPath];
-    cell.label.text = [NSString stringWithFormat:@"%lu of %lu", (unsigned long)indexPath.row + 1, (unsigned long)self.pagesCount];
+    
+    cell.itemImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%d.jpeg", indexPath.row % 16]];
     
     return cell;
-}
-
-- (UIColor *)colorForIndexPath:(NSIndexPath *)indexPath
-{
-    srandom((unsigned int)indexPath.row);
-    CGFloat red = (random() % 256) / 256.;
-    CGFloat green = (random() % 256) / 256.;
-    CGFloat blue = (random() % 256) / 256.;
-    
-    return [UIColor colorWithRed:red green:green blue:blue alpha:1];
 }
 
 #pragma mark - UICollectionView Delegate
@@ -101,6 +88,19 @@
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     return collectionView.bounds.size;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didEndDisplayingCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row == self.pagesCount - 3 && !self.pageControlView.displaysLoadingMoreEffect) {
+        self.pageControlView.displaysLoadingMoreEffect = YES;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            self.pagesCount += 15;
+            self.pageControlView.numberOfPages = self.pagesCount;
+            [self.collectionView reloadData];
+            self.pageControlView.displaysLoadingMoreEffect = NO;
+        });
+    }
 }
 
 #pragma mark - DAPageControlView Delegate

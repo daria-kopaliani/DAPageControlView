@@ -14,6 +14,6 @@ extern NSString *const DACollectionViewCellIdentifier;
 
 @interface DACollectionViewCell : UICollectionViewCell
 
-@property (readonly, strong, nonatomic) UILabel *label;
+@property (readonly, strong, nonatomic) IBOutlet UIImageView *itemImageView;
 
 @end
