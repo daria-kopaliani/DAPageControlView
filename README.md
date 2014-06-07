@@ -4,20 +4,23 @@
 [![License](https://img.shields.io/cocoapods/l/DAPageControlView.svg?style=flat)](http://cocoadocs.org/docsets/DAPageControlView)
 [![Platform](https://img.shields.io/cocoapods/p/DAPageControlView.svg?style=flat)](http://cocoadocs.org/docsets/DAPageControlView)
 
-![Alt text](DAPageControlView.gif)
-
 
 ## Abstract
 
-I just love `UIPageControl`, don’t you? It’s simple and intuitive, a perfect choice when you have a fullscreen `UIScrollView` with `pagingEnabled` and you want to encourage your users to “swipe to see more”.  
-So why use a scrollable `UIPageControl,` if its essence is to indicate the *current* page of *total number of* pages? Say, you have this screen where you display books for the current author. And usually there are just 5-6 books to display, but there is this one very productive author who has written 37 books. You do not want to change your design because of this one author, but the native `UIPageControl` will not look nice just for this one case. That’s when `DAPageControlView` comes to rescue: **it behaves exactly like `UIPageControl` when page indicators fit its width and handles nicely the case when they don’t**.   
-Besides if you want to use pagination to load those 37 books from your server, `DAPageControlView` knows how to handle that nicely too – it will animate the right-hand page indicator view when appropriate letting users know there is more data loading.
+I just love `UIPageControl`, don’t you? It’s simple and intuitive, it does not get any more "native" than this since Apple has used it in SpringBoard for ages. UIPageControl is the perfect choice when you have a fullscreen `UIScrollView` (`UICollectionView`) with `pagingEnabled` and you want to encourage your users to “swipe to see more”.
+
+`DAPageControlView` gives your users the exact same experience they get from `UIPageControl`, and something more. While `UIPageControl` is a winner for static data, `DAPageControlView` might be a better choice for the case when you fetch your data from a server in chunks and/or do not know the total number of items.
+
+Check out this gif with a `UICollectionView` of `PictureViews`: at first it displays just 5 of them and as soon as the user reaches the 4th one, it requests the next chunk of pictures and displays them shortly after that.  
+
+![Alt text](DAPageControlView.gif)  
+
+Note, that after fetching the second "portion" of pictures, if we used `UIPageControl`, the dots would not fit the screen width, but `DAPageControlView` is scrollable and applies "perspective" effect to dots on the right and/or on the left if neccessary. If all the dots can fit the screen `DAPageControlView` behaves exactly like `UIPageControl`.  
+Also there is an option to make the rightmost dot "blink" to let the user know that more items are loading.
 
 ## Usage
 
 To run the example project; clone the repo, and run `pod install` from the Example directory first.
-
-## Requirements
 
 ## Installation
 
@@ -26,9 +29,31 @@ it, simply add the following line to your Podfile:
 
     pod "DAPageControlView"
 
-## Author
+## How to use
 
-Daria Kopaliani, daria.kopaliani@gmail.com
+`DAPageControlView` is just a `UICollectionView` that depending on the `contentOffset` of a `UIScrollView` it is binded with, automatically updates its `currentPage` and, if neccessary, resizes its rightmost or leftmost page indicator views (dots) if there are more pages to the right or to the left accordingly.  
+
+First you create your `DAPageControlView` just like you would create a `UIPageView`
+
+    self.pageControlView = [[DAPageControlView alloc] initWithFrame:CGRectMake(0., 0., 320., 15.)];
+    self.pageControlView.numberOfPages = self.pagesCount;
+    self.pageControlView.currentPage = 0;
+    [self.view addSubview self.pageControlView];
+
+And of course you need a `UIScrollView` to bind it with. I have a `UICollectionView` as I want to reuse its subviews:
+
+    self.collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:layout];
+    self.collectionView.showsHorizontalScrollIndicator = NO;
+    self.collectionView.pagingEnabled = YES;
+    self.collectionView.dataSource = self;
+
+Now we need to let our `pageControlView` know about the `contentOffset` of the `collectionView`. The easiest way is to do this in `scrollViewDidScroll:` (`UIScrollViewDelegate` method) 
+
+    - (void)scrollViewDidScroll:(UIScrollView *)scrollView
+    {
+        [self.pageControlView updateForScrollViewContentOffset:self.collectionView.contentOffset.x];
+    }
+
 
 ## License
 
