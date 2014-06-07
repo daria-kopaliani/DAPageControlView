@@ -55,6 +55,8 @@ Now we need to let our `pageControlView` know about the `contentOffset` of the `
     }
 
 
+There is a `DAPageControlViewDelegate` if you want to be notified when a currentPage property is changed (page indicator views can be selectable). Also there is a `numberOfPagesAllowingPerspective` to configure precisely that.
+
 ## License
 
 DAPageControlView is available under the MIT license. See the LICENSE file for more info.
