@@ -18,9 +18,6 @@ Check out this gif with a `UICollectionView` of `PictureViews`: at first it disp
 Note, that after fetching the second "portion" of pictures, if we used `UIPageControl`, the dots would not fit the screen width, but `DAPageControlView` is scrollable and applies "perspective" effect to dots on the right and/or on the left if neccessary. If all the dots can fit the screen `DAPageControlView` behaves exactly like `UIPageControl`.  
 Also there is an option to make the rightmost dot "blink" to let the user know that more items are loading.
 
-## Usage
-
-To run the example project; clone the repo, and run `pod install` from the Example directory first.
 
 ## Installation
 
@@ -29,7 +26,10 @@ it, simply add the following line to your Podfile:
 
     pod "DAPageControlView"
 
-## How to use
+## Usage
+
+To run the example project, clone the repo, and run `pod install` from the Example directory first.  
+
 
 `DAPageControlView` is just a `UICollectionView` that depending on the `contentOffset` of a `UIScrollView` it is binded with, automatically updates its `currentPage` and, if neccessary, resizes its rightmost or leftmost page indicator views (dots) if there are more pages to the right or to the left accordingly.  
 
