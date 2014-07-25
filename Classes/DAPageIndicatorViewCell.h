@@ -15,6 +15,8 @@ extern NSString *const DAPageIndicatorViewCellIdentifier;
 @interface DAPageIndicatorViewCell : UICollectionViewCell
 
 @property (readonly, strong, nonatomic) UIButton *pageIndicatorView;
+@property (strong, nonatomic) UIColor* normalColor;
+@property (strong, nonatomic) UIColor* selectedColor;
 
 + (instancetype)defaultCell;
 
