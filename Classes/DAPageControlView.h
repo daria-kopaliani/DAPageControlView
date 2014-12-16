@@ -27,8 +27,13 @@
 @property (assign, nonatomic) NSUInteger numberOfPages;
 @property (assign, nonatomic) NSUInteger numberOfPagesAllowingPerspective;
 
+// added by ZH
+@property (strong, nonatomic) UIColor* normalColor;
+@property (strong, nonatomic) UIColor* selectedColor;
+
 @property (weak, nonatomic) id<DAPageControlViewDelegate> delegate;
 
 - (void)updateForScrollViewContentOffset:(CGFloat)contentOffset pageSize:(CGFloat)pageSize;
+- (void)gotoPage:(NSUInteger)page;
 
 @end
